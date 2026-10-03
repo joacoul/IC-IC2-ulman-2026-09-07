@@ -76,3 +76,11 @@ def actualizar_libro(titulo: str, libro_nuevo: Libro):
             libros[indice] = libro_nuevo.dict()
             return libro_nuevo
     raise HTTPException(status_code=404, detail="Libro no encontrado")
+
+@app.delete("/libros/{titulo}", status_code=204)
+def borrar_libro(titulo: str):
+    for indice, libro in enumerate(libros):
+        if libro["titulo"] == titulo:
+            libros.pop(indice)
+            return
+    raise HTTPException(status_code=404, detail="Libro no encontrado")
